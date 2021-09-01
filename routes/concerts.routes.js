@@ -34,7 +34,7 @@ router.route('/concerts/:id').put((req, res) => {
   const {performer, genre, price, day, image} = req.body;
 
   if (performer && genre && price && day && image) {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const index = db.concerts.findIndex(element => element.id == id);
 
     db.concerts[index] = {id: id, performer: performer, genre: genre, price: price, day: day, image: image};
@@ -46,7 +46,7 @@ router.route('/concerts/:id').put((req, res) => {
 });
 
 router.route('/concerts/:id').delete((req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const index = db.concerts.findIndex(element => element.id == id);
 
   db.concerts.splice(index, 1);

@@ -41,7 +41,7 @@ router.route('/testimonials/:id').put((req, res) => {
   const {author, text} = req.body;
 
   if (author && text) {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const index = db.testimonials.findIndex(element => element.id == id);
 
     db.testimonials[index] = {id: id, author: author, text: text};
@@ -53,7 +53,7 @@ router.route('/testimonials/:id').put((req, res) => {
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const index = db.testimonials.findIndex(element => element.id == id);
 
   db.testimonials.splice(index, 1);

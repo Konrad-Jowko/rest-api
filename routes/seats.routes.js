@@ -34,7 +34,7 @@ router.route('/seats/:id').put((req, res) => {
   const {day, seat, client, email} = req.body;
 
   if (day && seat && client && email) {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const index = db.seats.findIndex(element => element.id == id);
 
     db.seats[index] = {id: id, day: day, seat: seat, client: client, email: email};
@@ -46,7 +46,7 @@ router.route('/seats/:id').put((req, res) => {
 });
 
 router.route('/seats/:id').delete((req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const index = db.seats.findIndex(element => element.id == id);
 
   db.seats.splice(index, 1);
