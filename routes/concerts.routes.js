@@ -20,7 +20,7 @@ router.route('/concerts').post((req, res) => {
 
   if (performer && genre && price && day && image) {
     const id = uuidv4();
-    const element = {id: id, performer: performer, genre: genre, price: price, day: day, image: image};
+    const element = {id: id, performer: performer, genre: genre, price: parseInt(price), day: parseInt(day), image: image};
 
     db.concerts.push(element);
 
@@ -37,7 +37,7 @@ router.route('/concerts/:id').put((req, res) => {
     const id = parseInt(req.params.id);
     const index = db.concerts.findIndex(element => element.id == id);
 
-    db.concerts[index] = {id: id, performer: performer, genre: genre, price: price, day: day, image: image};
+    db.concerts[index] = {id: id, performer: performer, genre: genre, price: parseInt(price), day: parseInt(day), image: image};
 
     res.json({ message: 'OK' });
   } else {

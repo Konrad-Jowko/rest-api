@@ -20,11 +20,15 @@ router.route('/seats').post((req, res) => {
 
   if (day && seat && client && email) {
     const id = uuidv4();
-    const element = {id: id, day: day, seat: seat, client: client, email: email};
+    const element = {id: id, day: parseInt(day), seat: parseInt(seat), client: client, email: email};
+    const test = db.seats.filter(obj => obj.day == parseInt(day) && obj.seat == parseInt(seat))
 
-    db.seats.push(element);
-
-    res.json({ message: 'OK' });
+    if (test.length) {
+      res.status(400).json({ message: "The slot is already taken..." });
+    } else {
+      db.seats.push(element);
+      res.json({ message: 'OK' });
+    }
   } else {
     res.status(400).json({message: '400 Bad Request' });
   }
@@ -37,7 +41,7 @@ router.route('/seats/:id').put((req, res) => {
     const id = parseInt(req.params.id);
     const index = db.seats.findIndex(element => element.id == id);
 
-    db.seats[index] = {id: id, day: day, seat: seat, client: client, email: email};
+    db.seats[index] = {id: id, day: parseInt(day), seat: parseInt(seat), client: client, email: email};
 
     res.json({ message: 'OK' });
   } else {

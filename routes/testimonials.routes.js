@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const db = require('./../db');
 
