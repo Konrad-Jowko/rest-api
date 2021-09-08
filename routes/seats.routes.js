@@ -28,6 +28,7 @@ router.route('/seats').post((req, res) => {
     } else {
       db.seats.push(element);
       res.json({ message: 'OK' });
+      req.io.emit('seatsUpdated', db.seats);
     }
   } else {
     res.status(400).json({message: '400 Bad Request' });
