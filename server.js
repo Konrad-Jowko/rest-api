@@ -24,6 +24,7 @@ app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
 
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')));
 
@@ -35,7 +36,14 @@ app.use((req, res) => {
     res.json({ message: 'Not found...' });
 })
 
-mongoose.connect('mongodb+srv://Konrad:zCExGAGT3bsrdu47@newwavedb.iibtz.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
+if(NODE_ENV === 'production') dbUri = 'mongodb+srv://Konrad:zCExGAGT3bsrdu47@newwavedb.iibtz.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBTest';
+else dbUri = 'mongodb://localhost:27017/NewWaveDB';
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -52,3 +60,5 @@ const io = socket(server);
 io.on('connection', (socket) => {
   console.log('New socket!');
 });
+
+module.exports = server;

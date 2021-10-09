@@ -5,6 +5,7 @@
   "author": "Konrad Jówko <konrad.jowko@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chai-http": "4.3.0",
     "cors": "^2.8.5",
     "express": "4.17.1",
     "express-handlebars": "3.1.0",
@@ -15,6 +16,8 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "build": "cd client && yarn install && yarn build"
+    "build": "cd client && yarn install && yarn build",
+    "test": "set NODE_ENV=test&& mocha \"./{,!(node_modules|client)/**/}*.test.js\"",
+    "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test"
   }
 }
