@@ -3,12 +3,15 @@ const path = require('path');
 var cors = require('cors');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+
 
 
 const app = express();
 
 app.use(cors());
 
+app.use(helmet());
 app.use((req, res, next) => {
   req.io = io;
   next();
